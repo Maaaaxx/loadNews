@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .ct{
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .ct ul{
+            list-style: none;
+            padding: 0px;
+
+        }
+
+        .ct li {
+            text-align: left;
+            padding: 10px;
+            border-radius: 3px;
+            margin-top: 10px;
+            border: 1px solid #0EABE9;
+        }
+
+        .btn {
+            display: block;
+            width: 80px;
+            margin: 0 auto;
+            padding: 10px;
+            text-decoration: none;
+            color: rgba(253, 37, 37, 0.99);
+            border-radius: 5px;
+            border: 1px solid rgba(253, 37, 37, 0.99);
+        }
+        .loading{
+            color: #666;
+        }
+        .ct li:hover {
+            background: rgba(109, 181, 236, 0.3)
+        }
+
+        .btn:hover {
+            background: rgba(106, 195, 247, 0.41)
+        }
+    </style>
+</head>
+<body>
+    <div class="ct">
+        <ul class="list">
+            <li>新闻1</li>
+            <li>新闻2</li>
+        </ul>
+    <a id="load" class="btn" href="#">加载更多</a>
+    <span>加载中,请稍候...</span>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+    var cur = 3
+$('.ct span').hide()
+$('.btn').click(function(){
+    $(this).hide()
+    $('.ct span').show()
+    setTimeout(function(){
+        $.ajax({
+            url: '/loadMore',
+            method: 'get',
+            data: {
+                index: cur,
+                length: 5
+            }
+            
+        }).done(function(ret){
+            if(ret.status === 0){
+                $('.ct span').hide()
+                $('.btn').show()
+                append(ret.data)
+            }else{
+                alert('加载错误，请稍后重试')
+            }
+        }).fail(function(){
+            alert('系统异常')
+        })
+    },800)
+})
+
+function append(news){
+    $(news).each(function(){
+       
+        $('.ct .list').append('<li>'+this+'</li>')
+        cur++
+    })
+    
+}
+    </script>
+</body>
+</html>
