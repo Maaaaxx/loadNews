@@ -1,3 +1,6 @@
+function setRouter(app){ 
+ var router = app; 
+
 app.get('/loadMore',function(req,res){
     
         var curIndex = req.query.index
@@ -12,4 +15,5 @@ app.get('/loadMore',function(req,res){
             status: 0,
             data: news
         })
-    })
+    })}
+ module.exports.setRouter = setRouter
