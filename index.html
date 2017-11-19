@@ -78,9 +78,13 @@ $('.btn').click(function(){
                 $('.btn').show()
                 append(ret.data)
             }else{
+                $('.ct span').hide()
+                $('.btn').show()
                 alert('加载错误，请稍后重试')
             }
         }).fail(function(){
+            $('.ct span').hide()
+                $('.btn').show()
             alert('系统异常')
         })
     },800)
